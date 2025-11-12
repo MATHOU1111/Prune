@@ -1,0 +1,22 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.main-content {
+  min-height: calc(100vh - 64px);
+  background-color: #f5f5f5;
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+mat-toolbar button {
+  margin-left: 10px;
+}
+
+mat-toolbar mat-icon {
+  margin-right: 5px;
+}

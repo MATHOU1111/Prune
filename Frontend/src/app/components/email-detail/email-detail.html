@@ -1,0 +1,66 @@
+<div class="email-detail-container">
+  <div class="header-actions">
+    <button mat-raised-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Retour
+    </button>
+    <button mat-raised-button color="warn" (click)="deleteEmail()" *ngIf="email">
+      <mat-icon>delete</mat-icon>
+      Supprimer
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p>Chargement...</p>
+  </div>
+
+  <mat-card *ngIf="!loading && email" class="email-card">
+    <mat-card-header>
+      <mat-card-title>{{email.subject}}</mat-card-title>
+      <mat-card-subtitle>
+        <span [class]="'status-' + email.status.toLowerCase()">{{email.status}}</span>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="email-meta">
+        <div class="meta-row">
+          <strong>De :</strong> {{email.fromEmail}}
+        </div>
+        <div class="meta-row">
+          <strong>À :</strong> {{email.toEmail}}
+        </div>
+        <div class="meta-row" *ngIf="email.ccEmail">
+          <strong>CC :</strong> {{email.ccEmail}}
+        </div>
+        <div class="meta-row" *ngIf="email.bccEmail">
+          <strong>BCC :</strong> {{email.bccEmail}}
+        </div>
+        <div class="meta-row" *ngIf="email.sentDate">
+          <strong>Date d'envoi :</strong> {{formatDate(email.sentDate)}}
+        </div>
+        <div class="meta-row" *ngIf="email.receivedDate">
+          <strong>Date de réception :</strong> {{formatDate(email.receivedDate)}}
+        </div>
+        <div class="meta-row">
+          <strong>Type :</strong> {{email.type}}
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="email-body">
+        <h4>Message :</h4>
+        <div [innerHTML]="email.body" class="body-content"></div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="!loading && !email" class="not-found">
+    <mat-card>
+      <mat-card-content>
+        <p>Email non trouvé.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

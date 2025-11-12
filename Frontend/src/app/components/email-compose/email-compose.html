@@ -1,0 +1,61 @@
+<div class="email-compose-container">
+  <h2>Composer un email</h2>
+  
+  <form [formGroup]="emailForm" (ngSubmit)="onSend()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>À</mat-label>
+      <input matInput formControlName="to" placeholder="destinataire@example.com" required>
+      <mat-error *ngIf="emailForm.get('to')?.hasError('required')">
+        Le destinataire est requis
+      </mat-error>
+      <mat-error *ngIf="emailForm.get('to')?.hasError('email')">
+        Veuillez entrer une adresse email valide
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>CC</mat-label>
+      <input matInput formControlName="cc" placeholder="cc@example.com">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>BCC</mat-label>
+      <input matInput formControlName="bcc" placeholder="bcc@example.com">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Sujet</mat-label>
+      <input matInput formControlName="subject" placeholder="Sujet de l'email" required>
+      <mat-error *ngIf="emailForm.get('subject')?.hasError('required')">
+        Le sujet est requis
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Message</mat-label>
+      <textarea matInput formControlName="body" rows="10" placeholder="Votre message..." required></textarea>
+      <mat-error *ngIf="emailForm.get('body')?.hasError('required')">
+        Le message est requis
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isHtml">
+      Format HTML
+    </mat-checkbox>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!emailForm.valid || isLoading">
+        <span *ngIf="isLoading">Envoi en cours...</span>
+        <span *ngIf="!isLoading">Envoyer</span>
+      </button>
+
+      <button mat-raised-button color="accent" type="button" (click)="onSaveAsDraft()" [disabled]="isLoading">
+        Sauvegarder comme brouillon
+      </button>
+
+      <button mat-stroked-button type="button" (click)="onReset()">
+        Réinitialiser
+      </button>
+    </div>
+  </form>
+</div>

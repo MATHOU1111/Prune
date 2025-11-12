@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <span>{{title()}}</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/emails">
+    <mat-icon>inbox</mat-icon>
+    Mes Emails
+  </button>
+  <button mat-button routerLink="/compose">
+    <mat-icon>edit</mat-icon>
+    Composer
+  </button>
+</mat-toolbar>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

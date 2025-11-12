@@ -1,0 +1,149 @@
+<div class="email-list-container">
+  <h2>Gestion des Emails</h2>
+  
+  <mat-tab-group>
+    <mat-tab label="Emails Envoyés ({{sentEmails.length}})">
+      <div class="tab-content">
+        <table mat-table [dataSource]="sentEmails" class="mat-elevation-z8">
+          <ng-container matColumnDef="from">
+            <th mat-header-cell *matHeaderCellDef> De </th>
+            <td mat-cell *matCellDef="let email"> {{email.fromEmail}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="to">
+            <th mat-header-cell *matHeaderCellDef> À </th>
+            <td mat-cell *matCellDef="let email"> {{email.toEmail}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef> Sujet </th>
+            <td mat-cell *matCellDef="let email"> {{email.subject}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let email"> {{formatDate(email.sentDate)}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Statut </th>
+            <td mat-cell *matCellDef="let email"> 
+              <span [class]="'status-' + email.status.toLowerCase()">{{email.status}}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let email">
+              <button mat-icon-button (click)="viewEmail(email.id!)" title="Voir">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteEmail(email.id!)" title="Supprimer">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Emails Reçus ({{receivedEmails.length}})">
+      <div class="tab-content">
+        <table mat-table [dataSource]="receivedEmails" class="mat-elevation-z8">
+          <ng-container matColumnDef="from">
+            <th mat-header-cell *matHeaderCellDef> De </th>
+            <td mat-cell *matCellDef="let email"> {{email.fromEmail}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="to">
+            <th mat-header-cell *matHeaderCellDef> À </th>
+            <td mat-cell *matCellDef="let email"> {{email.toEmail}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef> Sujet </th>
+            <td mat-cell *matCellDef="let email"> {{email.subject}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let email"> {{formatDate(email.receivedDate)}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Statut </th>
+            <td mat-cell *matCellDef="let email"> 
+              <span [class]="'status-' + email.status.toLowerCase()">{{email.status}}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let email">
+              <button mat-icon-button (click)="viewEmail(email.id!)" title="Voir">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteEmail(email.id!)" title="Supprimer">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Brouillons ({{draftEmails.length}})">
+      <div class="tab-content">
+        <table mat-table [dataSource]="draftEmails" class="mat-elevation-z8">
+          <ng-container matColumnDef="from">
+            <th mat-header-cell *matHeaderCellDef> De </th>
+            <td mat-cell *matCellDef="let email"> {{email.fromEmail}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="to">
+            <th mat-header-cell *matHeaderCellDef> À </th>
+            <td mat-cell *matCellDef="let email"> {{email.toEmail}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef> Sujet </th>
+            <td mat-cell *matCellDef="let email"> {{email.subject}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let email"> - </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Statut </th>
+            <td mat-cell *matCellDef="let email"> 
+              <span class="status-draft">BROUILLON</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let email">
+              <button mat-icon-button (click)="viewEmail(email.id!)" title="Voir">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteEmail(email.id!)" title="Supprimer">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
